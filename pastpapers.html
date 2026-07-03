@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Past Papers - iGeni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        @font-face {
+            font-family: 'Feathers';
+            src: url('Feathers.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Feathers', system-ui, -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20"> 
+                
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="flex items-center gap-3 group">
+                        <img src="icon.png" alt="iGeni Icon" class="h-16 w-16 object-contain rounded-lg group-hover:scale-105 transition-transform duration-200" onerror="this.src='https://placehold.co/100x100/3b82f6/ffffff?text=iG'"/>
+                        <span class="text-4xl font-bold tracking-tight text-blue-600">IGeni</span>
+                    </a>
+                </div>
+
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="pastpapers.html" class="text-sm font-medium text-blue-600 transition-colors">Past papers</a>
+                    <a href="index.html#features" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Features</a>
+                    <a href="#" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Live Courses</a>
+                    <a href="about.html" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">About Us</a>
+                    <a href="https://wa.me/201093022198" target="_blank" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Support</a>
+                </nav>
+
+                <div class="md:hidden flex items-center">
+                    <button type="button" id="mobileMenuBtn" class="text-slate-600 hover:text-blue-600 focus:outline-none p-2" aria-label="Toggle Menu">
+                        <i id="menuIcon" class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white transition-all duration-200 shadow-inner">
+            <div class="px-4 pt-2 pb-4 space-y-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Home</a>
+                <a href="pastpapers.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50">Past papers</a>
+                <a href="index.html#features" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Features</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Live Courses</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">About Us</a>
+                <a href="https://wa.me/201093022198" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Support</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <div id="pastPapersView">
+            <section class="py-16 bg-gradient-to-b from-blue-50/40 to-white min-h-[60vh]">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-slate-900 tracking-tight">Past Papers</h2>
+                        <p class="text-slate-500 mt-3 text-base">Select an exam board below to explore your target subjects and resources.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <button onclick="toggleDropdown('cambridgeOptions')" class="w-full flex items-center justify-between p-6 hover:bg-slate-50/50 transition-colors duration-200 text-left focus:outline-none">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold">C</div>
+                                    <span class="text-xl font-bold text-slate-800">Cambridge</span>
+                                </div>
+                                <i id="cambridgeOptionsIcon" class="fas fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                            </button>
+                            <div id="cambridgeOptions" class="hidden border-t border-slate-100 bg-slate-50/30 p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-book text-slate-400 text-xs"></i> Mathematics</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-flask text-slate-400 text-xs"></i> Physics</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-dna text-slate-400 text-xs"></i> Biology</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-atom text-slate-400 text-xs"></i> Chemistry</a>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <button onclick="toggleDropdown('edexcelOptions')" class="w-full flex items-center justify-between p-6 hover:bg-slate-50/50 transition-colors duration-200 text-left focus:outline-none">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold">E</div>
+                                    <span class="text-xl font-bold text-slate-800">Edexcel</span>
+                                </div>
+                                <i id="edexcelOptionsIcon" class="fas fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                            </button>
+                            <div id="edexcelOptions" class="hidden border-t border-slate-100 bg-slate-50/30 p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-book text-slate-400 text-xs"></i> Mathematics</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-language text-slate-400 text-xs"></i> English Language</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-chart-pie text-slate-400 text-xs"></i> Economics</a>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                            <button onclick="toggleDropdown('oxfordOptions')" class="w-full flex items-center justify-between p-6 hover:bg-slate-50/50 transition-colors duration-200 text-left focus:outline-none">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold">O</div>
+                                    <span class="text-xl font-bold text-slate-800">Oxford</span>
+                                </div>
+                                <i id="oxfordOptionsIcon" class="fas fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                            </button>
+                            <div id="oxfordOptions" class="hidden border-t border-slate-100 bg-slate-50/30 p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-book text-slate-400 text-xs"></i> Mathematics</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-flask text-slate-400 text-xs"></i> Physics</a>
+                                <a href="#" class="p-3 bg-white border border-slate-100 rounded-xl shadow-sm hover:border-blue-400 hover:text-blue-600 transition-all font-medium text-sm flex items-center gap-2"><i class="fas fa-laptop-code text-slate-400 text-xs"></i> Computer Science</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-800 pb-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2 text-white font-bold text-xl mb-2">
+                        <img src="icon.png" alt="iGeni Logo" class="h-6 w-6 object-contain rounded" onerror="this.src='https://placehold.co/50x50/3b82f6/ffffff?text=iG'"/>
+                        <span>iGeni</span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm">Empowering IGCSE success with modern educational environments.</p>
+                </div>
+                <div class="flex gap-6 text-sm">
+                    <a href="https://wa.me/201093022198" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-whatsapp text-lg mr-1.5 align-middle text-emerald-500"></i> Get Support</a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center mt-8 text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 iGeni. All rights reserved.</p>
+                <p>Designed for excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        // Accordion / Dropdown Toggle Action
+        function toggleDropdown(elementId) {
+            const container = document.getElementById(elementId);
+            const icon = document.getElementById(elementId + 'Icon');
+            
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                container.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Mobile Menu Button Toggle logic
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            
+            if(mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = "fas fa-bars text-xl";
+            } else {
+                menuIcon.className = "fas fa-xmark text-xl";
+            }
+        });
+
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = "fas fa-bars text-xl";
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Courses - iGeni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Feathers';
+            src: url('Feathers.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Feathers', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20"> 
+                
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="flex items-center gap-3 group">
+                        <img src="icon.png" alt="iGeni Icon" class="h-16 w-16 object-contain rounded-lg group-hover:scale-105 transition-transform duration-200" onerror="this.src='https://placehold.co/100x100/3b82f6/ffffff?text=iG'"/>
+                        <span class="text-4xl font-bold tracking-tight text-blue-600">IGeni</span>
+                    </a>
+                </div>
+
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="pastpapers.html" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Past papers</a>
+                    <a href="index.html#features" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Features</a>
+                    <a href="livecourses.html" class="text-sm font-medium text-blue-600 transition-colors">Live Courses</a>
+                    <a href="about.html" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">About Us</a>
+                    <a href="https://wa.me/201093022198" target="_blank" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Support</a>
+                </nav>
+
+                <div class="md:hidden flex items-center">
+                    <button type="button" id="mobileMenuBtn" class="text-slate-600 hover:text-blue-600 focus:outline-none p-2" aria-label="Toggle Menu">
+                        <i id="menuIcon" class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white transition-all duration-200 shadow-inner">
+            <div class="px-4 pt-2 pb-4 space-y-2">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Home</a>
+                <a href="pastpapers.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Past papers</a>
+                <a href="index.html#features" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Features</a>
+                <a href="livecourses.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50">Live Courses</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">About Us</a>
+                <a href="https://wa.me/201093022198" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50">Support</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <div id="liveCoursesView">
+            <section class="py-16 bg-gradient-to-b from-blue-50/40 to-white min-h-[60vh]">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-slate-900 tracking-tight">Live Courses</h2>
+                        <p class="text-slate-500 mt-3 text-base">Explore our currently running online sessions and synchronized workflows.</p>
+                    </div>
+
+                    <div id="loadingState" class="flex justify-center items-center py-12">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+                    </div>
+
+                    <div id="errorState" class="hidden text-center py-8">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 text-red-600 border border-red-100 text-sm">
+                            <i class="fas fa-circle-exclamation"></i>
+                            <span>Failed to load courses. Please check connection configurations.</span>
+                        </div>
+                    </div>
+
+                    <div id="emptyState" class="hidden text-center py-12">
+                        <p class="text-slate-500">No active live courses match the website dashboard layout context.</p>
+                    </div>
+
+                    <div id="coursesGrid" class="space-y-16 hidden">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-800 pb-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2 text-white font-bold text-xl mb-2">
+                        <img src="icon.png" alt="iGeni Logo" class="h-6 w-6 object-contain rounded" onerror="this.src='https://placehold.co/50x50/3b82f6/ffffff?text=iG'"/>
+                        <span>iGeni</span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm">Empowering IGCSE success with modern educational environments.</p>
+                </div>
+                <div class="flex gap-6 text-sm">
+                    <a href="https://wa.me/201093022198" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-whatsapp text-lg mr-1.5 align-middle text-emerald-500"></i> Get Support</a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center mt-8 text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 iGeni. All rights reserved.</p>
+                <p>Designed for excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Supabase Config Initialization ---
+        const SUPABASE_URL = 'https://qxluetvkqxillhqsbubl.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4bHVldHZrcXhpbGxocXNidWJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM5MzIwNTMsImV4cCI6MjA0OTUwODA1M30.11cD0yE0aJW1OIx0kB4EaWtCvg5nUkj-0QuTVk-C7zg';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- DOM Bindings ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const emptyState = document.getElementById('emptyState');
+        const coursesGrid = document.getElementById('coursesGrid');
+
+        // --- Mobile Menu Layout Logic Engine Toggle ---
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if(mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = "fas fa-bars text-xl";
+            } else {
+                menuIcon.className = "fas fa-xmark text-xl";
+            }
+        });
+
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = "fas fa-bars text-xl";
+            });
+        });
+
+        // --- Data Fetching Operations ---
+        async function fetchLiveCourses() {
+            try {
+                // Fetch fields including subject level parameters from relation definitions
+                const { data, error } = await supabaseClient
+                    .from('subjects')
+                    .select('id, subname, code, board, color, level, ended, is_approved, teachers(firstname, lastname, profilepicture, title)')
+                    .eq('website', true)
+                    .eq('ended', false)
+                    .eq('is_approved', true);
+
+                if (error) throw error;
+
+                loadingState.classList.add('hidden');
+
+                if (!data || data.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+
+                // Group entries systematically by subject title
+                const groupedData = {};
+                data.forEach(item => {
+                    const groupKey = item.subname || 'General Courses';
+                    if (!groupedData[groupKey]) {
+                        groupedData[groupKey] = [];
+                    }
+                    groupedData[groupKey].push(item);
+                });
+
+                // Generate layout segments sorted by group categories
+                let finalHtmlOutput = '';
+                
+                for (const [subjectTitle, coursesList] of Object.entries(groupedData)) {
+                    finalHtmlOutput += `
+                        <div class="subject-group-container">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-600 pl-3 tracking-tight">${escapeHtml(subjectTitle)}</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    `;
+
+                    finalHtmlOutput += coursesList.map(item => {
+                        let teacherLabel = 'No Instructor Assigned';
+                        let profilePicMarkup = `
+                            <div class="w-28 h-28 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-3xl shadow-inner mx-auto mb-4">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                        `;
+
+                        if (item.teachers) {
+                            const titlePrefix = item.teachers.title ? `${item.teachers.title} ` : '';
+                            const first = item.teachers.firstname || '';
+                            const last = item.teachers.lastname || '';
+                            const full = `${first} ${last}`.trim();
+                            if (full) {
+                                teacherLabel = `${titlePrefix}${full}`;
+                            }
+
+                            // Dynamic image presentation with large centering profiles
+                            if (item.teachers.profilepicture && item.teachers.profilepicture.trim() !== '') {
+                                profilePicMarkup = `
+                                    <img src="${item.teachers.profilepicture}" alt="${escapeHtml(full)}" class="w-28 h-28 rounded-full object-cover border-2 border-white shadow-md mx-auto mb-4" onerror="this.outerHTML='<div class=\'w-28 h-28 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-3xl shadow-inner mx-auto mb-4\'><i class=\'fas fa-user-graduate\'></i></div>'"/>
+                                `;
+                            } else if (full) {
+                                const initials = (first.charAt(0) + last.charAt(0)).toUpperCase();
+                                profilePicMarkup = `
+                                    <div class="w-28 h-28 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xl border border-blue-100 shadow-sm mx-auto mb-4">
+                                        ${escapeHtml(initials)}
+                                    </div>
+                                `;
+                            }
+                        }
+
+                        // Parse colors safely
+                        const customHexColor = (item.color && item.color.trim() !== '') ? item.color : '#3b82f6';
+                        
+                        // Parse session tags safely
+                        const sessionTag = item.code ? escapeHtml(item.code) : 'Live';
+
+                        return `
+                            <div class="bg-white p-6 pt-8 rounded-2xl border transition-all duration-300 flex flex-col items-center text-center shadow-sm hover:shadow-xl hover:-translate-y-1 relative overflow-hidden" style="border-color: ${customHexColor}40; background-color: ${customHexColor}0a;">
+                                <span class="absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full text-white shadow-3xs tracking-wider uppercase" style="background-color: ${customHexColor};">
+                                    ${sessionTag}
+                                </span>
+                                
+                                ${profilePicMarkup}
+
+                                <h4 class="text-xl font-bold text-slate-900 tracking-tight line-clamp-1 mb-1">${escapeHtml(teacherLabel)}</h4>
+                                
+                                <div class="flex flex-col gap-0.5 text-xs text-slate-400 font-medium">
+                                    <span class="capitalize"><strong class="text-slate-500 font-medium">Board:</strong> ${escapeHtml((item.board || 'General').toLowerCase())}</span>
+                                    <span><strong class="text-slate-500 font-medium">Level:</strong> ${escapeHtml(item.level || 'N/A')}</span>
+                                </div>
+
+                                <a href="https://igeniforms.vercel.app/?code=${item.id}" target="_blank" class="w-full mt-6 py-2.5 px-4 rounded-xl text-white font-bold text-sm tracking-wide transition-all shadow-xs inline-flex items-center justify-center gap-2 mt-auto" style="background-color: ${customHexColor}; filter: drop-shadow(0 4px 6px ${customHexColor}20);">
+                                    <span>Register Now</span>
+                                    <i class="fas fa-arrow-right text-xs"></i>
+                                </a>
+                            </div>
+                        `;
+                    }).join('');
+
+                    finalHtmlOutput += `
+                            </div>
+                        </div>
+                    `;
+                }
+
+                coursesGrid.innerHTML = finalHtmlOutput;
+                coursesGrid.classList.remove('hidden');
+            } catch (err) {
+                console.error('Supabase query exception captured:', err);
+                loadingState.classList.add('hidden');
+                errorState.classList.remove('hidden');
+            }
+        }
+
+        // Helper string entity sanitizer block mechanism preventing injection execution profiles
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+        }
+
+        // Initialize operational initialization routine loops
+        document.addEventListener('DOMContentLoaded', fetchLiveCourses);
+    </script>
+</body>
+</html>
