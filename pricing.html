@@ -1,190 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>iGeni - Plans & Pricing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Table</title>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      padding: 24px;
+    .pricing-table-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow-x: auto;
+      font-family: Arial, sans-serif;
     }
 
     .pricing-table {
-      max-width: 1000px;
-      margin: 0 auto;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      overflow: hidden;
-      background-color: #1e293b;
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
     }
 
-    .table-row {
-      display: grid;
-      /* Left column takes 2.2x space, 4 plan columns split the rest */
-      grid-template-columns: 2.2fr repeat(4, 1fr);
-      align-items: center;
-      padding: 14px 18px;
-      border-bottom: 1px solid #334155;
+    .pricing-table th, 
+    .pricing-table td {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    .table-row:last-child {
-      border-bottom: none;
+    /* Column Widths */
+    .pricing-table th:first-child,
+    .pricing-table td:first-child {
+      width: 36%;
+    }
+
+    .pricing-table th:not(:first-child),
+    .pricing-table td:not(:first-child) {
+      width: 16%;
+      text-align: center;
     }
 
     /* Sticky Header */
-    .header-row {
+    .pricing-table thead th {
       position: sticky;
       top: 0;
-      background-color: #0f172a;
-      border-bottom: 2px solid #475569;
+      background-color: #ffffff;
       z-index: 10;
-    }
-
-    .feature-header {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #94a3b8;
-    }
-
-    .plan-header {
-      text-align: center;
+      vertical-align: bottom;
     }
 
     .plan-name {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #f8fafc;
-      margin-bottom: 4px;
+      font-size: 1.25rem;
+      margin: 0 0 4px 0;
     }
 
     .plan-price {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #38bdf8;
+      color: #2563eb;
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 0;
     }
 
-    /* Table Body Styling */
-    .feature-col {
-      text-align: left;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #e2e8f0;
-    }
-
-    .plan-data-col {
-      text-align: center;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #cbd5e1;
-    }
-
-    /* Indicators */
     .check {
-      color: #4ade80; /* Bright Green Tick */
-      font-size: 1.2rem;
+      color: #2563eb;
       font-weight: bold;
     }
 
     .cross {
-      color: #f87171; /* Soft Red Cross */
-      font-size: 1.2rem;
-      font-weight: bold;
+      color: #9ca3af;
     }
   </style>
 </head>
 <body>
 
-<div class="pricing-table">
-  <!-- Table Header Row -->
-  <div class="table-row header-row">
-    <div class="feature-header">Features</div>
-    <div class="plan-header">
-      <div class="plan-name">Free Plan</div>
-      <div class="plan-price">Free</div>
-    </div>
-    <div class="plan-header">
-      <div class="plan-name">Basic Plan</div>
-      <div class="plan-price">3,000 EGP/year</div>
-    </div>
-    <div class="plan-header">
-      <div class="plan-name">Pro Plan</div>
-      <div class="plan-price">9,000 EGP/year</div>
-    </div>
-    <div class="plan-header">
-      <div class="plan-name">Premium Plan</div>
-      <div class="plan-price">16,000 EGP/year</div>
-    </div>
-  </div>
-
-  <!-- Included Total Students -->
-  <div class="table-row">
-    <div class="feature-col">Included Total Students</div>
-    <div class="plan-data-col">20</div>
-    <div class="plan-data-col">50</div>
-    <div class="plan-data-col">200</div>
-    <div class="plan-data-col">500</div>
-  </div>
-
-  <!-- Extra Students Price -->
-  <div class="table-row">
-    <div class="feature-col">Extra Students Price</div>
-    <div class="plan-data-col">200 EGP</div>
-    <div class="plan-data-col">150 EGP</div>
-    <div class="plan-data-col">100 EGP</div>
-    <div class="plan-data-col">50 EGP</div>
-  </div>
-
-  <!-- AI Features -->
-  <div class="table-row">
-    <div class="feature-col">AI Features</div>
-    <div class="plan-data-col"><span class="cross">✕</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-  </div>
-
-  <!-- Zoom Attendance -->
-  <div class="table-row">
-    <div class="feature-col">Zoom Attendance</div>
-    <div class="plan-data-col"><span class="cross">✕</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-  </div>
-
-  <!-- Zoom AI Attendance Taking -->
-  <div class="table-row">
-    <div class="feature-col">Zoom AI Attendance Taking</div>
-    <div class="plan-data-col"><span class="cross">✕</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-  </div>
-
-  <!-- Secure Videos -->
-  <div class="table-row">
-    <div class="feature-col">Secure Videos</div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-  </div>
-
-  <!-- Add Assistants -->
-  <div class="table-row">
-    <div class="feature-col">Add Assistants</div>
-    <div class="plan-data-col"><span class="cross">✕</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-    <div class="plan-data-col"><span class="check">✓</span></div>
-  </div>
+<div class="pricing-table-container">
+  <table class="pricing-table">
+    <thead>
+      <tr>
+        <th scope="col">Features</th>
+        <th scope="col">
+          <h3 class="plan-name">Free</h3>
+          <p class="plan-price">Free</p>
+        </th>
+        <th scope="col">
+          <h3 class="plan-name">Basic</h3>
+          <p class="plan-price">3,000 EGP/year</p>
+        </th>
+        <th scope="col">
+          <h3 class="plan-name">Pro</h3>
+          <p class="plan-price">9,000 EGP/year</p>
+        </th>
+        <th scope="col">
+          <h3 class="plan-name">Premium</h3>
+          <p class="plan-price">16,000 EGP/year</p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Included Total Students</th>
+        <td>20</td>
+        <td>50</td>
+        <td>200</td>
+        <td>500</td>
+      </tr>
+      <tr>
+        <th scope="row">Extra Students Price</th>
+        <td>200 EGP</td>
+        <td>150 EGP</td>
+        <td>100 EGP</td>
+        <td>50 EGP</td>
+      </tr>
+      <tr>
+        <th scope="row">AI Features</th>
+        <td><span class="cross" aria-label="No">—</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+      </tr>
+      <tr>
+        <th scope="row">Zoom Attendance</th>
+        <td><span class="cross" aria-label="No">—</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+      </tr>
+      <tr>
+        <th scope="row">Secure Videos</th>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+      </tr>
+      <tr>
+        <th scope="row">Zoom AI Attendance Taking</th>
+        <td><span class="cross" aria-label="No">—</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+      </tr>
+      <tr>
+        <th scope="row">Assistants</th>
+        <td><span class="cross" aria-label="No">—</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+        <td><span class="check" aria-label="Yes">✓</span></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 </body>
